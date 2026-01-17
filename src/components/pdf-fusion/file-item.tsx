@@ -46,15 +46,15 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       exit="exit"
       layout
       className={cn(
-        "flex items-center gap-4 bg-card p-3 border-b last:border-b-0",
-        isDragging ? "shadow-md bg-accent" : "hover:bg-muted/50"
+        "flex items-center gap-4 bg-card px-4 md:px-6 py-3 border-b last:border-b-0",
+        isDragging ? "shadow-lg bg-accent" : "hover:bg-muted/50"
       )}
     >
       <button {...attributes} {...listeners} className="cursor-grab touch-none p-1 text-muted-foreground hover:text-foreground">
         <GripVertical size={18} />
       </button>
       <FileType2 className="h-6 w-6 text-primary flex-shrink-0" />
-      <div className="flex-1 truncate px-2 sm:px-4">
+      <div className="flex-1 truncate px-2">
         <p className="truncate text-sm font-medium text-foreground">
           {fileItem.file.name}
         </p>

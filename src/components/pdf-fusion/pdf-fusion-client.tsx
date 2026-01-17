@@ -9,7 +9,6 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Download, Loader2, CheckCircle } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -97,23 +96,23 @@ export function PdfFusionClient() {
     >
       <div className="p-4 md:p-6 space-y-4">
         <FileDropzone onDrop={handleDrop} />
-        
-        <AnimatePresence>
-          {files.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="space-y-3"
-            >
-              <h2 className="text-lg font-semibold text-foreground px-2">File Queue</h2>
-              <ScrollArea className="w-full max-h-[40vh] border rounded-md">
-                <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} />
-              </ScrollArea>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+      
+      <AnimatePresence>
+        {files.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="space-y-3"
+          >
+            <h2 className="text-lg font-semibold text-foreground px-4 md:px-6">File Queue</h2>
+            <ScrollArea className="w-full max-h-[40vh] border-y">
+              <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} />
+            </ScrollArea>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
           {isMerging && (
@@ -121,9 +120,9 @@ export function PdfFusionClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="px-6 pb-6"
+              className="px-4 md:px-6 pb-4"
             >
-              <div className="w-full space-y-2">
+              <div className="w-full space-y-2 pt-4">
                 <p className="text-sm text-center text-muted-foreground">Merging... {Math.round(progress)}%</p>
                 <Progress value={progress} className="w-full h-2" />
               </div>
@@ -132,50 +131,47 @@ export function PdfFusionClient() {
       </AnimatePresence>
 
       {(files.length > 0) && (
-        <>
-          <Separator />
-          <div className="p-4 bg-muted/30 flex justify-center">
-            <AnimatePresence mode="wait">
-              {mergedPdfUrl ? (
-                <motion.a
-                  key="download"
-                  href={mergedPdfUrl}
-                  download="merged.pdf"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  className={cn(buttonVariants({ size: 'lg', variant: 'success' }), "gap-2 shadow-md")}
+        <div className="p-4 bg-muted/30 flex justify-center">
+          <AnimatePresence mode="wait">
+            {mergedPdfUrl ? (
+              <motion.a
+                key="download"
+                href={mergedPdfUrl}
+                download="merged.pdf"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                className={cn(buttonVariants({ size: 'lg', variant: 'success' }), "gap-2 shadow-md")}
+              >
+                <CheckCircle size={20} />
+                <span>Download PDF</span>
+              </motion.a>
+            ) : (
+              <motion.div
+                key="merge"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+              >
+                <Button
+                  size="lg"
+                  onClick={handleMerge}
+                  disabled={isMerging}
+                  className="shadow-md"
                 >
-                  <CheckCircle size={20} />
-                  <span>Download PDF</span>
-                </motion.a>
-              ) : (
-                <motion.div
-                  key="merge"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                >
-                  <Button
-                    size="lg"
-                    onClick={handleMerge}
-                    disabled={isMerging}
-                    className="shadow-md"
-                  >
-                    {isMerging ? (
-                      <Loader2 className="animate-spin" size={20} />
-                    ) : (
-                      <Download size={20} />
-                    )}
-                    <span className="ml-2">
-                      {isMerging ? "Merging..." : `Merge ${files.length} Files`}
-                    </span>
-                  </Button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </>
+                  {isMerging ? (
+                    <Loader2 className="animate-spin" size={20} />
+                  ) : (
+                    <Download size={20} />
+                  )}
+                  <span className="ml-2">
+                    {isMerging ? "Merging..." : `Merge ${files.length} Files`}
+                  </span>
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       )}
     </motion.div>
   );
