@@ -7,8 +7,8 @@ export default function Home() {
        <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <div className="w-full max-w-3xl px-4">
-        <div className="text-center mb-8">
+      <div className="w-full max-w-3xl">
+        <div className="text-center mb-8 px-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
             PDFusion
           </h1>
