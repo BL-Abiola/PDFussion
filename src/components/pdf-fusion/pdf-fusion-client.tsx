@@ -95,9 +95,9 @@ export function PdfFusionClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="mt-6"
+              className="mt-6 -mx-4 md:-mx-6"
             >
-              <h2 className="text-lg font-semibold text-foreground mb-3">File Queue</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-3 px-4 md:px-6">File Queue</h2>
               <ScrollArea className="h-full max-h-[calc(100vh-420px)] w-full">
                 {MemoizedFileQueue}
               </ScrollArea>
