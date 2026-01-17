@@ -121,7 +121,7 @@ export function PdfFusionClient() {
               )}
               {isMerging && (
                   <div className="w-full space-y-2">
-                    <p className="text-sm text-center text-primary-foreground/80">Merging... {Math.round(progress)}%</p>
+                    <p className="text-sm text-center text-muted-foreground">Merging... {Math.round(progress)}%</p>
                     <Progress value={progress} className="w-full h-2" />
                   </div>
               )}
@@ -132,7 +132,7 @@ export function PdfFusionClient() {
       {(files.length > 0) && (
         <>
           <Separator />
-          <div className="p-6 bg-muted/50 flex justify-end">
+          <div className="p-6 bg-muted/50 flex justify-center">
             <AnimatePresence mode="wait">
               {mergedPdfUrl ? (
                 <motion.a
