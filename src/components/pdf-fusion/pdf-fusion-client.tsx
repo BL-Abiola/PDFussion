@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { PDFDocument } from "pdf-lib";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileDropzone } from "./file-dropzone";
@@ -8,9 +8,10 @@ import { FileQueue } from "./file-queue";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Download, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { Download, Loader2, CheckCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 export type FileItemType = {
   id: string;
@@ -24,10 +25,9 @@ export function PdfFusionClient() {
   const [isMerging, setIsMerging] = useState(false);
   const [progress, setProgress] = useState(0);
   const [mergedPdfUrl, setMergedPdfUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
-    setError(null);
     setMergedPdfUrl(null);
     const newFiles = acceptedFiles.map((file) => ({
       id: `file-${fileCounter++}`,
@@ -46,12 +46,15 @@ export function PdfFusionClient() {
 
   const handleMerge = async () => {
     if (files.length < 2) {
-      setError("Please upload at least two PDF files to merge.");
+      toast({
+        variant: "destructive",
+        title: "Not enough files",
+        description: "Please upload at least two PDF files to merge.",
+      });
       return;
     }
     setIsMerging(true);
     setProgress(0);
-    setError(null);
     setMergedPdfUrl(null);
 
     try {
@@ -69,24 +72,30 @@ export function PdfFusionClient() {
       const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       setMergedPdfUrl(url);
+      toast({
+        title: "Merge successful!",
+        description: "Your PDF is ready for download.",
+      });
     } catch (e) {
       console.error(e);
-      setError("An error occurred while merging the PDFs. Please ensure they are valid files.");
+      toast({
+        variant: "destructive",
+        title: "An error occurred",
+        description: "Could not merge the PDFs. Please ensure they are valid files.",
+      });
     } finally {
       setIsMerging(false);
     }
   };
   
-  const MemoizedFileQueue = useMemo(() => <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} />, [files, handleReorder, handleDelete]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative w-full max-w-3xl mx-auto rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden"
+      className="relative w-full max-w-3xl mx-auto rounded-xl border bg-card text-card-foreground shadow-lg overflow-hidden"
     >
-      <div className="p-4 sm:p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4">
         <FileDropzone onDrop={handleDrop} />
         
         <AnimatePresence>
@@ -95,11 +104,11 @@ export function PdfFusionClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="space-y-4"
+              className="space-y-3"
             >
-              <h2 className="text-lg font-semibold text-foreground">File Queue</h2>
-              <ScrollArea className="w-full max-h-64 border rounded-md">
-                {MemoizedFileQueue}
+              <h2 className="text-lg font-semibold text-foreground px-2">File Queue</h2>
+              <ScrollArea className="w-full max-h-[40vh] border rounded-md">
+                <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} />
               </ScrollArea>
             </motion.div>
           )}
@@ -107,25 +116,17 @@ export function PdfFusionClient() {
       </div>
 
       <AnimatePresence>
-          {(files.length > 0 || error) && (
+          {isMerging && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="px-4 sm:px-6 pb-6"
+              className="px-6 pb-6"
             >
-              {error && (
-                <div className="mb-4 flex items-center gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
-                  <AlertCircle size={20} />
-                  <p className="text-sm font-medium">{error}</p>
-                </div>
-              )}
-              {isMerging && (
-                  <div className="w-full space-y-2">
-                    <p className="text-sm text-center text-muted-foreground">Merging... {Math.round(progress)}%</p>
-                    <Progress value={progress} className="w-full h-2" />
-                  </div>
-              )}
+              <div className="w-full space-y-2">
+                <p className="text-sm text-center text-muted-foreground">Merging... {Math.round(progress)}%</p>
+                <Progress value={progress} className="w-full h-2" />
+              </div>
             </motion.div>
           )}
       </AnimatePresence>
@@ -133,7 +134,7 @@ export function PdfFusionClient() {
       {(files.length > 0) && (
         <>
           <Separator />
-          <div className="p-4 sm:p-6 bg-muted/50 flex justify-center">
+          <div className="p-4 bg-muted/30 flex justify-center">
             <AnimatePresence mode="wait">
               {mergedPdfUrl ? (
                 <motion.a
@@ -143,7 +144,7 @@ export function PdfFusionClient() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className={cn(buttonVariants({ size: 'lg', variant: 'success' }), "gap-2")}
+                  className={cn(buttonVariants({ size: 'lg', variant: 'success' }), "gap-2 shadow-md")}
                 >
                   <CheckCircle size={20} />
                   <span>Download PDF</span>
@@ -159,6 +160,7 @@ export function PdfFusionClient() {
                     size="lg"
                     onClick={handleMerge}
                     disabled={isMerging}
+                    className="shadow-md"
                   >
                     {isMerging ? (
                       <Loader2 className="animate-spin" size={20} />
