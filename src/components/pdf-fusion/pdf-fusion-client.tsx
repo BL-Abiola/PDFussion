@@ -86,7 +86,7 @@ export function PdfFusionClient() {
       transition={{ duration: 0.5 }}
       className="relative w-full max-w-3xl mx-auto rounded-xl border bg-card text-card-foreground shadow-sm overflow-hidden"
     >
-      <div className="p-6 md:p-8 space-y-6">
+      <div className="p-4 md:p-6 space-y-6">
         <FileDropzone onDrop={handleDrop} />
         
         <AnimatePresence>
@@ -95,9 +95,10 @@ export function PdfFusionClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
+              className="mt-6"
             >
               <h2 className="text-lg font-semibold text-foreground mb-3">File Queue</h2>
-              <ScrollArea className="h-full max-h-[40vh] w-full">
+              <ScrollArea className="h-full max-h-[calc(100vh-420px)] w-full">
                 {MemoizedFileQueue}
               </ScrollArea>
             </motion.div>
@@ -111,7 +112,7 @@ export function PdfFusionClient() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="px-6 md:px-8 pb-6"
+              className="px-4 md:px-6 pb-6"
             >
               {error && (
                 <div className="mb-4 flex items-center gap-2 text-destructive p-3 bg-destructive/10 rounded-lg">
@@ -132,7 +133,7 @@ export function PdfFusionClient() {
       {(files.length > 0) && (
         <>
           <Separator />
-          <div className="p-6 bg-muted/50 flex justify-center">
+          <div className="p-4 md:p-6 bg-muted/50 flex justify-center">
             <AnimatePresence mode="wait">
               {mergedPdfUrl ? (
                 <motion.a
