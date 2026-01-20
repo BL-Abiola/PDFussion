@@ -20,25 +20,25 @@ export function FileDropzone({ onDrop }: FileDropzoneProps) {
     <div
       {...getRootProps()}
       className={cn(
-        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-transparent p-12 text-center transition-colors duration-300 hover:border-primary/60 hover:bg-accent",
-        isDragActive && "border-primary bg-accent"
+        "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white/30 bg-transparent p-12 text-center transition-colors duration-300 hover:border-white hover:bg-white/10",
+        isDragActive && "border-white bg-white/10"
       )}
     >
       <input {...getInputProps()} />
-      <div className="flex flex-col items-center gap-3 text-muted-foreground">
+      <div className="flex flex-col items-center gap-3 text-indigo-200">
         <UploadCloud
           className={cn(
             "h-10 w-10 transition-transform duration-300",
-            isDragActive && "scale-110 text-primary"
+            isDragActive && "scale-110 text-white"
           )}
         />
-        <p className="text-lg font-medium text-foreground">
+        <p className="text-lg font-medium text-white">
           {isDragActive
             ? "Drop the files here!"
             : "Drag & drop PDFs here, or click to select"}
         </p>
         <p className="text-sm">
-          All processing is done in your browser.
+          All processing is done on your device for privacy.
         </p>
       </div>
     </div>

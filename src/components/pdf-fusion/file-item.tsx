@@ -53,32 +53,32 @@ export function FileItem({ fileItem, onDelete, isMergeDone }: FileItemProps) {
       exit="exit"
       layout
       className={cn(
-        "flex items-center gap-4 bg-card p-3 border rounded-lg shadow-sm transition-shadow",
-        isDragging ? "shadow-lg bg-accent ring-2 ring-primary" : "hover:shadow-md"
+        "flex items-center gap-4 bg-white/10 p-3 border border-white/20 rounded-lg transition-colors hover:bg-white/20",
+        isDragging && "bg-white/30 ring-2 ring-white"
       )}
       drag={isMergeDone ? "x" : false}
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={{ right: 0.5, left: 0 }}
       onDragEnd={isMergeDone ? handleDragEnd : undefined}
     >
-      <button {...attributes} {...listeners} className="cursor-grab touch-none p-2 text-muted-foreground hover:text-foreground" disabled={isMergeDone}>
+      <button {...attributes} {...listeners} className="cursor-grab touch-none p-2 text-indigo-200 hover:text-white" disabled={isMergeDone}>
         <GripVertical size={20} />
       </button>
-      <div className="flex-shrink-0 bg-primary/10 text-primary p-2 rounded-md">
+      <div className="flex-shrink-0 bg-white/10 text-white p-2 rounded-md">
         <FileType2 className="h-6 w-6" />
       </div>
       <div className="flex-1 truncate min-w-0">
-        <p className="truncate text-sm font-medium text-foreground">
+        <p className="truncate text-sm font-medium text-white">
           {fileItem.file.name}
         </p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-indigo-200">
           {formatBytes(fileItem.file.size)}
         </p>
       </div>
       <Button
         variant="ghost"
         size="icon"
-        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full flex-shrink-0"
+        className="text-indigo-200 hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full flex-shrink-0"
         onClick={() => onDelete(fileItem.id)}
         aria-label="Delete file"
       >
