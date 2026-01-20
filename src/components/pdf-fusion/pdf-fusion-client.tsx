@@ -8,7 +8,7 @@ import { FileQueue } from "./file-queue";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Download, Loader2, CheckCircle, Files } from "lucide-react";
+import { Download, Loader2, Files } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -88,7 +88,7 @@ export function PdfFusionClient() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative w-full mx-auto rounded-2xl border border-white/20 bg-white/10 dark:bg-slate-900/20 text-white shadow-2xl backdrop-blur-lg overflow-hidden"
+      className="relative w-full mx-auto rounded-2xl border bg-card/60 dark:bg-card/40 text-card-foreground shadow-2xl backdrop-blur-lg overflow-hidden"
     >
       <div className="p-4 md:p-6 space-y-4">
         <FileDropzone onDrop={handleDrop} />
@@ -103,8 +103,8 @@ export function PdfFusionClient() {
             className="space-y-4"
           >
              <div className="px-4 md:px-6">
-              <h2 className="text-lg font-semibold">Your Files</h2>
-              <p className="text-sm text-indigo-200">Drag to reorder. After merging, you can swipe right to delete.</p>
+              <h2 className="text-lg font-semibold text-foreground">Your Files</h2>
+              <p className="text-sm text-muted-foreground">Drag to reorder. After merging, swipe right to delete.</p>
             </div>
             <ScrollArea className="w-full max-h-[40vh] sm:max-h-[50vh]">
               <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} isMergeDone={!!mergedPdfUrl} />
@@ -122,15 +122,15 @@ export function PdfFusionClient() {
               className="px-6 pb-6 pt-2"
             >
               <div className="w-full space-y-2">
-                <p className="text-sm text-center text-indigo-200">Merging... {Math.round(progress)}%</p>
-                <Progress value={progress} className="w-full h-2 bg-white/20" />
+                <p className="text-sm text-center text-muted-foreground">Merging... {Math.round(progress)}%</p>
+                <Progress value={progress} className="w-full h-2 bg-secondary" />
               </div>
             </motion.div>
           )}
       </AnimatePresence>
 
       {(files.length > 0) && (
-        <div className="p-4 bg-black/20 flex justify-center">
+        <div className="p-4 bg-background/50 flex justify-center border-t">
           <AnimatePresence mode="wait">
             {mergedPdfUrl ? (
               <motion.a
@@ -142,8 +142,8 @@ export function PdfFusionClient() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 className={cn(buttonVariants({ size: 'lg', variant: 'success' }), "gap-2 shadow-lg")}
               >
-                <CheckCircle size={20} />
-                <span>Download PDF</span>
+                <Download size={20} />
+                <span>Download Merged PDF</span>
               </motion.a>
             ) : (
               <motion.div

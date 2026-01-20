@@ -4,37 +4,39 @@
 
 @layer base {
   :root {
-    --background: 210 17% 98%; /* Soft gray #F9FAFB */
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 20% 98%;
+    --foreground: 220 15% 20%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 20% 100%;
+    --card-foreground: 220 15% 20%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 243 75% 58%; /* Deep Indigo #4F46E5 */
+    --primary: 243 75% 58%;
     --primary-foreground: 210 40% 98%;
+    
+    --secondary: 220 15% 95%;
+    --secondary-foreground: 220 15% 25%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 45%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 220 15% 92%;
+    --accent-foreground: 220 15% 15%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 349 89% 60%;
+    --destructive-foreground: 0 0% 98%;
 
-    --destructive: 349 89% 60%; /* Rose Red #F43F5E */
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 98%;
 
-    --success: 142 71% 45%; /* Emerald Green */
-    --success-foreground: 142 71% 95%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
     --ring: 243 75% 58%;
-    --radius: 0.5rem;
+    
+    --radius: 0.75rem;
+
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -51,36 +53,37 @@
   }
 
   .dark {
-    --background: 224 71% 4%; /* Darker gray for backdrop */
-    --foreground: 210 40% 98%;
+    --background: 220 20% 12%;
+    --foreground: 220 15% 85%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 20% 16%;
+    --card-foreground: 220 15% 85%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 243 75% 68%; /* Lighter indigo for dark mode */
+    --primary: 243 75% 68%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 220 15% 80%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 55%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 220 15% 25%;
+    --accent-foreground: 220 15% 95%;
 
-    --destructive: 349 80% 65%; /* Lighter rose for dark mode */
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 349 80% 65%;
+    --destructive-foreground: 0 0% 98%;
 
-    --success: 142 71% 35%;
-    --success-foreground: 142 71% 95%;
+    --success: 142 60% 55%;
+    --success-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
     --ring: 243 75% 68%;
+    
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
