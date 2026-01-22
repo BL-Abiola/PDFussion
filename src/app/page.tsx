@@ -55,7 +55,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <div className="w-full">
+            <div className="w-full h-full">
               <PdfFusionClient onMergeComplete={handleMergeComplete} />
             </div>
             <div className="w-full">

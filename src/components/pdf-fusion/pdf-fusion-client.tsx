@@ -105,26 +105,20 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <motion.div
-        layout
-        className="rounded-xl border bg-card text-card-foreground shadow-lg mb-8"
-      >
-        <div className="p-6">
-          <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
-        </div>
-      </motion.div>
+    <div className="w-full rounded-xl border bg-card text-card-foreground shadow-lg flex flex-col h-full">
+      <div className="p-6">
+        <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
+      </div>
 
       <AnimatePresence>
         {files.length > 0 && (
           <motion.div
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            className="rounded-xl border bg-card text-card-foreground shadow-lg flex flex-col flex-1 min-h-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col flex-1 min-h-0"
           >
-            <div className="p-4 px-4 sm:px-6 border-b flex justify-between items-center">
+            <div className="px-4 sm:px-6 pb-4 border-b flex justify-between items-center">
               <div>
                 <h2 className="text-lg font-semibold">Your Files</h2>
                 <p className="text-sm text-muted-foreground mt-1">
@@ -137,11 +131,11 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
               </Button>
             </div>
             <ScrollArea className="flex-grow">
-              <FileQueue
-                files={files}
-                onReorder={handleReorder}
-                onDelete={handleDelete}
-              />
+                <FileQueue
+                  files={files}
+                  onReorder={handleReorder}
+                  onDelete={handleDelete}
+                />
             </ScrollArea>
             <div className="border-t p-4 sm:p-6 text-center">
               <AnimatePresence mode="wait">
@@ -196,19 +190,16 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {files.length === 0 && (
+        {files.length === 0 && !isMerging && (
           <motion.div
-            key="placeholder_card"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            className="rounded-xl border border-dashed bg-card/50 flex-1"
+            exit={{ opacity: 0 }}
+            className="flex-1 flex flex-col items-center justify-center text-center p-8 text-muted-foreground"
           >
-            <div className="h-full flex items-center justify-center text-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm">
                 Add files above to get started.
               </p>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

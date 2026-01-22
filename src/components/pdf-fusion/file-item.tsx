@@ -43,21 +43,21 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       variants={variants}
       layout
       className={cn(
-        "flex items-center w-full bg-background border rounded-xl shadow-sm",
+        "flex items-center w-full bg-background border rounded-lg shadow-sm p-3",
         isDragging ? "opacity-75 shadow-lg" : ""
       )}
     >
-      <button
+      <div
         {...attributes}
         {...listeners}
-        className="cursor-grab touch-none p-3 text-muted-foreground hover:text-foreground"
+        className="cursor-grab touch-none p-2 text-muted-foreground hover:text-foreground"
         aria-label="Drag to reorder"
       >
-        <GripVertical size={16} />
-      </button>
+        <GripVertical size={18} />
+      </div>
 
-      <div className="flex-shrink-0">
-        <FileText className="h-6 w-6 text-primary/80" />
+      <div className="flex-shrink-0 ml-1">
+        <FileText className="h-7 w-7 text-primary/80" />
       </div>
       
       <div className="flex-1 truncate min-w-0 px-4">
@@ -72,7 +72,7 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full flex-shrink-0 mr-2"
+        className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8 rounded-full flex-shrink-0"
         onClick={() => onDelete(fileItem.id)}
         aria-label="Delete file"
       >
