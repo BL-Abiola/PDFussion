@@ -27,14 +27,14 @@ export function MergedDocuments({ documents, onDelete }: MergedDocumentsProps) {
 
   return (
     <div className="w-full rounded-xl border bg-card text-card-foreground shadow-lg flex flex-col">
-      <div className="p-4 px-6 border-b">
+      <div className="p-4 sm:px-6 border-b">
         <h2 className="text-lg font-semibold text-foreground">Your Merged Documents</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Download or delete your previously merged files from this session.
         </p>
       </div>
       <ScrollArea className="flex-1" style={{ maxHeight: "65vh" }}>
-        <ul className="p-6 space-y-4">
+        <ul className="p-4 sm:p-6 space-y-3">
           <AnimatePresence>
             {documents.map((doc) => (
               <MergedDocumentItem key={doc.id} document={doc} onDelete={onDelete} />
@@ -60,33 +60,33 @@ function MergedDocumentItem({ document, onDelete }: { document: MergedDocument, 
             animate="visible"
             exit="exit"
             layout
-            className="flex items-center w-full bg-secondary/30 p-4 border rounded-xl shadow-sm"
+            className="flex items-center w-full bg-secondary/30 p-3 sm:p-4 border rounded-xl shadow-sm"
         >
-            <div className="flex-1 truncate min-w-0">
+            <div className="flex-1 truncate min-w-0 pr-2">
                 <p className="truncate font-medium text-foreground">{document.name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground truncate">
                     Created: {format(document.timestamp, "MMM d, yyyy 'at' h:mm a")}
                 </p>
             </div>
-            <div className="flex items-center ml-4 space-x-2">
+            <div className="flex items-center flex-shrink-0 ml-2 space-x-1">
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="text-muted-foreground hover:text-primary hover:bg-primary/10 h-10 w-10 rounded-full"
+                    className="text-muted-foreground hover:text-primary hover:bg-primary/10 h-9 w-9 rounded-full"
                     asChild
                 >
                     <a href={document.url} download={document.name} aria-label={`Download ${document.name}`}>
-                        <FileDown size={20} />
+                        <FileDown size={18} />
                     </a>
                 </Button>
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-10 w-10 rounded-full"
+                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full"
                     onClick={() => onDelete(document.id)}
                     aria-label={`Delete ${document.name}`}
                 >
-                    <Trash2 size={20} />
+                    <Trash2 size={18} />
                 </Button>
             </div>
         </motion.li>
