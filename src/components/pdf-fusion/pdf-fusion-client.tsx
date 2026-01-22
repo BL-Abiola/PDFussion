@@ -8,7 +8,7 @@ import { FileQueue } from "./file-queue";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Files, X } from "lucide-react";
+import { Files, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { FileItemType } from "./types";
 
@@ -109,7 +109,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative w-full mx-auto rounded-xl border bg-card text-card-foreground shadow-lg overflow-hidden flex flex-col"
+      className="relative w-full mx-auto rounded-xl border bg-card text-card-foreground shadow-lg overflow-hidden flex flex-col h-[70vh]"
     >
       <div className="p-6">
         <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
@@ -137,7 +137,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
                 Clear All
               </Button>
             </div>
-            <ScrollArea className="w-full flex-1 max-h-[calc(80vh-320px)] lg:max-h-[45vh]">
+            <ScrollArea className="w-full flex-1">
               <FileQueue
                 files={files}
                 onReorder={handleReorder}

@@ -15,7 +15,7 @@ type MergedDocumentsProps = {
 export function MergedDocuments({ documents, onDelete }: MergedDocumentsProps) {
   if (documents.length === 0) {
     return (
-      <div className="w-full h-full rounded-xl border bg-card text-card-foreground shadow-lg flex flex-col items-center justify-center text-center p-8 min-h-[400px] lg:min-h-[calc(80vh+78px)]">
+      <div className="w-full h-[70vh] rounded-xl border bg-card text-card-foreground shadow-lg flex flex-col items-center justify-center text-center p-8">
         <Library className="h-16 w-16 text-muted-foreground/50 mb-4" />
         <h3 className="text-xl font-semibold text-foreground">Your Library is Empty</h3>
         <p className="text-muted-foreground mt-2 max-w-xs">
@@ -26,7 +26,7 @@ export function MergedDocuments({ documents, onDelete }: MergedDocumentsProps) {
   }
 
   return (
-    <div className="w-full rounded-xl border bg-card text-card-foreground shadow-lg max-h-[80vh] flex flex-col">
+    <div className="w-full rounded-xl border bg-card text-card-foreground shadow-lg h-[70vh] flex flex-col">
       <div className="p-4 px-6 border-b">
         <h2 className="text-lg font-semibold text-foreground">Your Merged Documents</h2>
         <p className="text-sm text-muted-foreground mt-1">
