@@ -6,9 +6,10 @@ import { cn } from "@/lib/utils";
 
 type FileDropzoneProps = {
   onDrop: (acceptedFiles: File[]) => void;
+  hasFiles?: boolean;
 };
 
-export function FileDropzone({ onDrop }: FileDropzoneProps) {
+export function FileDropzone({ onDrop, hasFiles = false }: FileDropzoneProps) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -32,11 +33,19 @@ export function FileDropzone({ onDrop }: FileDropzoneProps) {
             isDragActive && "scale-110 text-primary"
           )}
         />
-        <p className="text-lg font-medium text-foreground">
-          {isDragActive
-            ? "Drop the files here!"
-            : "Drag & drop PDFs here, or click to select"}
-        </p>
+        {hasFiles ? (
+          <p className="text-lg font-medium text-foreground">
+            {isDragActive
+              ? "Drop to add more files!"
+              : "Drag & drop to add more, or click to select"}
+          </p>
+        ) : (
+          <p className="text-lg font-medium text-foreground">
+            {isDragActive
+              ? "Drop the files here!"
+              : "Drag & drop PDFs here, or click to select"}
+          </p>
+        )}
         <p className="text-sm text-muted-foreground">
           All processing is done on your device for privacy.
         </p>

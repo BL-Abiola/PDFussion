@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Files } from "lucide-react";
+import { Loader2, Files, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { FileItemType } from "./types";
 
@@ -41,6 +41,10 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
   const handleReorder = useCallback((reorderedFiles: FileItemType[]) => {
     setFiles(reorderedFiles);
   }, []);
+  
+  const handleClearAll = () => {
+    setFiles([]);
+  };
 
   const reset = () => {
     setFiles([]);
@@ -113,7 +117,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
       className="relative w-full mx-auto rounded-xl border bg-card text-card-foreground shadow-lg overflow-hidden flex flex-col max-h-[80vh]"
     >
       <div className="p-6">
-        <FileDropzone onDrop={handleDrop} />
+        <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
       </div>
       
       <AnimatePresence>
@@ -124,9 +128,15 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
             exit={{ opacity: 0, height: 0 }}
             className="flex-1 flex flex-col min-h-0 border-t"
           >
-             <div className="p-4 px-6 border-b bg-card">
-              <h2 className="text-lg font-semibold text-foreground">Your Files</h2>
-              <p className="text-sm text-muted-foreground mt-1">Drag to reorder.</p>
+             <div className="p-4 px-6 border-b bg-card flex justify-between items-center">
+              <div>
+                <h2 className="text-lg font-semibold text-foreground">Your Files</h2>
+                <p className="text-sm text-muted-foreground mt-1">Drag to reorder.</p>
+              </div>
+              <Button variant="outline" size="sm" onClick={handleClearAll}>
+                <X className="h-4 w-4 mr-2" />
+                Clear All
+              </Button>
             </div>
             <ScrollArea className="w-full flex-1">
               <FileQueue files={files} onReorder={handleReorder} onDelete={handleDelete} />
