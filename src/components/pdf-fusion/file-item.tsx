@@ -50,7 +50,7 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       <button
         {...attributes}
         {...listeners}
-        className="cursor-grab touch-none p-2 -m-2 text-muted-foreground hover:text-foreground"
+        className="cursor-grab touch-none p-2 -my-2 -ml-2 text-muted-foreground hover:text-foreground"
         aria-label="Drag to reorder"
       >
         <GripVertical size={16} />
