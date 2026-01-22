@@ -47,28 +47,28 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       )}
     >
       <div className={cn(
-        "flex items-center w-full bg-card p-2 md:p-3 border rounded-xl transition-all duration-200",
+        "flex items-center w-full bg-card p-2 border rounded-lg transition-all duration-200",
         "hover:border-primary/40 hover:shadow-sm",
-        isDragging ? "shadow-xl bg-accent border-primary" : "shadow-sm",
+        isDragging ? "shadow-lg bg-accent border-primary" : "shadow-sm",
       )}>
         <button
           {...attributes}
           {...listeners}
-          className="cursor-grab touch-none p-2 -m-2 text-muted-foreground hover:text-foreground"
+          className="cursor-grab touch-none p-1.5 -m-1.5 text-muted-foreground hover:text-foreground"
           aria-label="Drag to reorder"
         >
-          <GripVertical size={20} />
+          <GripVertical size={18} />
         </button>
 
         <div className="flex-shrink-0 mx-2">
-          <FileText className="h-6 w-6 text-primary" />
+          <FileText className="h-5 w-5 text-primary" />
         </div>
         
         <div className="flex-1 truncate min-w-0">
-          <p className="truncate font-medium text-foreground">
+          <p className="truncate text-sm font-medium text-foreground">
             {fileItem.file.name}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             {formatBytes(fileItem.file.size)}
           </p>
         </div>
@@ -76,11 +76,11 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full flex-shrink-0 ml-2"
+          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-8 w-8 rounded-full flex-shrink-0 ml-2"
           onClick={() => onDelete(fileItem.id)}
           aria-label="Delete file"
         >
-          <Trash2 size={18} />
+          <Trash2 size={16} />
         </Button>
       </div>
     </motion.li>
