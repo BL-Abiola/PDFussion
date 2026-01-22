@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FileDropzone } from "./file-dropzone";
 import { FileQueue } from "./file-queue";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Files, X } from "lucide-react";
@@ -23,7 +22,6 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
   const [files, setFiles] = useState<FileItemType[]>([]);
   const [isMerging, setIsMerging] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [outputFilename, setOutputFilename] = useState("merged.pdf");
   const { toast } = useToast();
 
   const handleDrop = useCallback((acceptedFiles: File[]) => {
@@ -61,17 +59,11 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
       });
       return;
     }
-    if (!outputFilename.trim() || !outputFilename.toLowerCase().endsWith('.pdf')) {
-        toast({
-            variant: 'destructive',
-            title: 'Invalid filename',
-            description: 'Filename must not be empty and must end with .pdf',
-        });
-        return;
-    }
 
     setIsMerging(true);
     setProgress(0);
+
+    const filename = `merged-${Date.now()}.pdf`;
 
     try {
       const mergedPdf = await PDFDocument.create();
@@ -88,11 +80,11 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
       const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
 
-      onMergeComplete({ name: outputFilename, url });
+      onMergeComplete({ name: filename, url });
 
       toast({
         title: "Merge successful!",
-        description: `${outputFilename} has been added to your library.`,
+        description: `${filename} has been added to your library.`,
       });
 
       reset();
@@ -162,17 +154,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
       </AnimatePresence>
 
       {(files.length > 0) && (
-        <div className="p-6 bg-muted/50 border-t space-y-4">
-            <div className="space-y-2">
-                <label htmlFor="output-filename" className="text-sm font-medium text-foreground">Output Filename</label>
-                <Input 
-                    id="output-filename"
-                    value={outputFilename}
-                    onChange={(e) => setOutputFilename(e.target.value)}
-                    placeholder="e.g., merged-document.pdf"
-                    disabled={isMerging}
-                />
-            </div>
+        <div className="p-6 bg-muted/50 border-t">
             <div className="flex justify-center">
                 <Button
                     size="lg"
