@@ -26,7 +26,7 @@ export function ThemeToggle() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="focus-visible:ring-0 focus-visible:ring-offset-0">
             <Settings className="h-5 w-5" />
             <span className="sr-only">Settings</span>
           </Button>
