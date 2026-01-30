@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { FileDown, Trash2, Library } from "lucide-react";
+import { FileDown, Trash2, Library, FileCheck2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
@@ -34,13 +34,13 @@ export function MergedDocuments({ documents, onDelete }: MergedDocumentsProps) {
         </p>
       </div>
       <ScrollArea className="flex-1" style={{ maxHeight: "65vh" }}>
-        <ul className="p-4 sm:p-6 space-y-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4 sm:p-6">
           <AnimatePresence>
             {documents.map((doc) => (
               <MergedDocumentItem key={doc.id} document={doc} onDelete={onDelete} />
             ))}
           </AnimatePresence>
-        </ul>
+        </div>
       </ScrollArea>
     </div>
   );
@@ -48,47 +48,52 @@ export function MergedDocuments({ documents, onDelete }: MergedDocumentsProps) {
 
 function MergedDocumentItem({ document, onDelete }: { document: MergedDocument, onDelete: (id: string) => void }) {
     const variants = {
-        hidden: { opacity: 0, y: -20 },
-        visible: { opacity: 1, y: 0 },
-        exit: { opacity: 0, x: 100, transition: { duration: 0.3 } },
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
     };
 
     return (
-        <motion.li
+        <motion.div
             variants={variants}
             initial="hidden"
             animate="visible"
             exit="exit"
             layout
-            className="flex items-center w-full bg-card/80 p-3 sm:p-4 border rounded-xl shadow-sm"
+            className="relative group/item flex flex-col items-center justify-center rounded-2xl border bg-card p-3 text-center shadow-sm transition-all aspect-square hover:shadow-lg hover:-translate-y-1"
         >
-            <div className="flex-1 truncate min-w-0 pr-2">
-                <p className="truncate font-medium text-foreground">{document.name}</p>
-                <p className="text-sm text-muted-foreground truncate">
-                    Created: {format(document.timestamp, "MMM d, yyyy 'at' h:mm a")}
+            <FileCheck2 className="h-1/3 w-1/3 text-success mb-2" />
+
+            <div className="flex-1 min-w-0 w-full flex flex-col items-center justify-center">
+                <p className="w-full truncate text-sm font-medium text-foreground px-1">
+                    {document.name}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                    {format(document.timestamp, "MMM d, h:mm a")}
                 </p>
             </div>
-            <div className="flex items-center flex-shrink-0 ml-2 space-x-1">
-                <Button
-                    variant="ghost"
+
+            <div className="absolute bottom-3 left-2 right-2 flex items-center justify-center space-x-2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
+                 <Button
+                    variant="outline"
                     size="icon"
-                    className="text-muted-foreground hover:text-primary hover:bg-primary/10 h-9 w-9 rounded-full"
+                    className="h-9 w-9 rounded-full bg-background/50 backdrop-blur-sm shadow-md"
                     asChild
                 >
                     <a href={document.url} download={document.name} aria-label={`Download ${document.name}`}>
-                        <FileDown size={18} />
+                        <FileDown size={16} />
                     </a>
                 </Button>
                 <Button
-                    variant="ghost"
+                    variant="outline"
                     size="icon"
-                    className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-9 w-9 rounded-full"
+                    className="h-9 w-9 rounded-full bg-background/50 backdrop-blur-sm shadow-md hover:bg-destructive/10 hover:text-destructive hover:border-destructive/50"
                     onClick={() => onDelete(document.id)}
                     aria-label={`Delete ${document.name}`}
                 >
-                    <Trash2 size={18} />
+                    <Trash2 size={16} />
                 </Button>
             </div>
-        </motion.li>
+        </motion.div>
     );
 }
