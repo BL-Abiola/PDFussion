@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-40 w-full border-b bg-background">
         <div className="container mx-auto flex h-16 items-center px-4 sm:px-6 md:px-8">
           <a href="/" className="flex items-center space-x-2">
             <Files className="h-6 w-6 text-primary" />
