@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PdfFusionClient } from '@/components/pdf-fusion/pdf-fusion-client';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Files } from 'lucide-react';
@@ -13,15 +13,44 @@ export type MergedDocument = {
   timestamp: Date;
 };
 
-let mergedDocCounter = 0;
-
 export default function Home() {
   const [mergedDocuments, setMergedDocuments] = useState<MergedDocument[]>([]);
+  const isInitialMount = useRef(true);
+
+  // Load from localStorage on initial client-side render
+  useEffect(() => {
+    try {
+      const storedDocs = localStorage.getItem('mergedDocuments');
+      if (storedDocs) {
+        const parsedDocs = JSON.parse(storedDocs).map((doc: any) => ({
+          ...doc,
+          timestamp: new Date(doc.timestamp)
+        }));
+        setMergedDocuments(parsedDocs);
+      }
+    } catch (error) {
+      console.error("Error reading from localStorage", error);
+    }
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Save to localStorage whenever mergedDocuments changes, skipping the initial render
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    try {
+      localStorage.setItem('mergedDocuments', JSON.stringify(mergedDocuments));
+    } catch (error) {
+      console.error("Error writing to localStorage", error);
+    }
+  }, [mergedDocuments]);
+
 
   const handleMergeComplete = (mergedFile: { name: string; url: string }) => {
     const newDoc: MergedDocument = {
       ...mergedFile,
-      id: `merged-${mergedDocCounter++}`,
+      id: `merged-${Date.now()}`,
       timestamp: new Date(),
     };
     setMergedDocuments((prevDocs) => [newDoc, ...prevDocs]);
