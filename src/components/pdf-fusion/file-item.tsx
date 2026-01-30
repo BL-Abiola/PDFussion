@@ -31,36 +31,31 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
   };
 
   const variants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
+    hidden: { opacity: 0, scale: 0.5 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.5, transition: { duration: 0.2 } },
   };
 
   return (
-    <motion.li
+    <motion.div
       ref={setNodeRef}
       style={style}
       variants={variants}
       layout
+      {...attributes}
+      {...listeners}
       className={cn(
-        "flex w-full items-center gap-3 rounded-xl border bg-card p-3 shadow-sm transition-shadow",
-        isDragging ? "bg-accent shadow-lg scale-105" : ""
+        "relative group/item flex flex-col items-center justify-center rounded-2xl border bg-card p-3 text-center shadow-sm transition-all aspect-square cursor-grab",
+        isDragging ? "z-10 scale-105 shadow-2xl bg-accent ring-2 ring-primary" : "hover:shadow-lg hover:-translate-y-1"
       )}
     >
-      <div
-        {...attributes}
-        {...listeners}
-        className="flex-shrink-0 cursor-grab touch-none"
-        aria-label="Drag to reorder"
-      >
-        <FileText className="h-8 w-8 text-primary" />
-      </div>
+      <FileText className="h-1/3 w-1/3 text-primary/80 mb-2" />
 
-      <div className="flex-1 min-w-0">
-        <p className="truncate text-sm font-medium text-foreground">
+      <div className="flex-1 min-w-0 w-full flex flex-col items-center justify-center">
+        <p className="w-full truncate text-sm font-medium text-foreground px-1">
           {fileItem.file.name}
         </p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground mt-1">
           {formatBytes(fileItem.file.size)}
         </p>
       </div>
@@ -68,12 +63,15 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="h-9 w-9 flex-shrink-0 rounded-full text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-        onClick={() => onDelete(fileItem.id)}
+        className="absolute top-1 right-1 h-7 w-7 rounded-full text-muted-foreground/70 opacity-0 group-hover/item:opacity-100 hover:bg-destructive/10 hover:text-destructive z-20 cursor-pointer"
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent drag from starting when clicking delete
+          onDelete(fileItem.id);
+        }}
         aria-label="Delete file"
       >
-        <Trash2 size={18} />
+        <Trash2 size={16} />
       </Button>
-    </motion.li>
+    </motion.div>
   );
 }

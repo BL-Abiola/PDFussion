@@ -11,7 +11,7 @@ import {
 import {
   arrayMove,
   SortableContext,
-  verticalListSortingStrategy,
+  rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { AnimatePresence } from "framer-motion";
 import { FileItem } from "./file-item";
@@ -48,8 +48,8 @@ export function FileQueue({ files, onReorder, onDelete }: FileQueueProps) {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={files.map((f) => f.id)} strategy={verticalListSortingStrategy}>
-        <ul className="space-y-4">
+      <SortableContext items={files.map((f) => f.id)} strategy={rectSortingStrategy}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           <AnimatePresence initial={false}>
             {files.map((fileItem) => (
               <FileItem
@@ -59,7 +59,7 @@ export function FileQueue({ files, onReorder, onDelete }: FileQueueProps) {
               />
             ))}
           </AnimatePresence>
-        </ul>
+        </div>
       </SortableContext>
     </DndContext>
   );
