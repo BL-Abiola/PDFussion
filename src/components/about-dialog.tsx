@@ -30,7 +30,7 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean, onOpenChang
             <div className="space-y-1">
                 <h3 className="font-semibold text-foreground">Developer</h3>
                 <p className="text-sm text-muted-foreground">
-                Firebase Studio
+                [Developer Name]
                 </p>
             </div>
             <div className="space-y-2">
