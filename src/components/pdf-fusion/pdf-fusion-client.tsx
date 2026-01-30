@@ -110,98 +110,102 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
         <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
       </div>
 
-      <AnimatePresence mode="wait">
-        {files.length > 0 ? (
-          <motion.div
-            key="files-present"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex flex-col flex-1 min-h-0"
-          >
-            <div className="px-4 sm:px-6 pb-4 border-b flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-semibold">Your Files</h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Drag to reorder.
-                </p>
+      <div className="flex flex-col flex-1 min-h-0">
+        <AnimatePresence mode="wait">
+          {files.length > 0 ? (
+            <motion.div
+              key="files-present"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col flex-1 min-h-0"
+            >
+              <div className="p-4 sm:px-6 flex justify-between items-center">
+                <div>
+                  <h2 className="text-lg font-semibold">Your Files</h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Drag to reorder.
+                  </p>
+                </div>
+                <Button variant="outline" size="sm" onClick={handleClearAll}>
+                  <X className="h-4 w-4 mr-2" />
+                  Clear All
+                </Button>
               </div>
-              <Button variant="outline" size="sm" onClick={handleClearAll}>
-                <X className="h-4 w-4 mr-2" />
-                Clear All
-              </Button>
-            </div>
-            <ScrollArea className="flex-grow">
-                <FileQueue
-                  files={files}
-                  onReorder={handleReorder}
-                  onDelete={handleDelete}
-                />
-            </ScrollArea>
-            <div className="border-t p-4 sm:p-6 text-center">
-              <AnimatePresence mode="wait">
-                {isMerging ? (
-                  <motion.div
-                    key="progress"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="w-full space-y-3"
-                  >
-                    <p className="text-sm font-medium text-muted-foreground animate-pulse">
-                      Merging your documents...
-                    </p>
-                    <Progress value={progress} className="w-full h-2" />
-                    <p className="text-xs text-muted-foreground">
-                      {Math.round(progress)}% complete
-                    </p>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="button"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="space-y-3"
-                  >
-                    <h3 className="text-md font-medium text-foreground">
-                      Ready to go?
-                    </h3>
-                    <div className="flex justify-center">
-                      <Button
-                        size="lg"
-                        onClick={handleMerge}
-                        className="shadow-lg w-full max-w-xs"
-                      >
-                        <Files size={20} />
-                        <span className="ml-2">
-                          {`Merge ${files.length} File${
-                            files.length > 1 ? "s" : ""
-                          }`}
-                        </span>
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-        ) : !isMerging ? (
+              <ScrollArea className="flex-grow">
+                  <FileQueue
+                    files={files}
+                    onReorder={handleReorder}
+                    onDelete={handleDelete}
+                  />
+              </ScrollArea>
+              <div className="border-t p-4 sm:p-6 text-center">
+                <AnimatePresence mode="wait">
+                  {isMerging ? (
+                    <motion.div
+                      key="progress"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full space-y-3"
+                    >
+                      <p className="text-sm font-medium text-muted-foreground animate-pulse">
+                        Merging your documents...
+                      </p>
+                      <Progress value={progress} className="w-full h-2" />
+                      <p className="text-xs text-muted-foreground">
+                        {Math.round(progress)}% complete
+                      </p>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="button"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="space-y-3"
+                    >
+                      <h3 className="text-md font-medium text-foreground">
+                        Ready to go?
+                      </h3>
+                      <div className="flex justify-center">
+                        <Button
+                          size="lg"
+                          onClick={handleMerge}
+                          className="shadow-lg w-full max-w-xs"
+                        >
+                          <Files size={20} />
+                          <span className="ml-2">
+                            {`Merge ${files.length} File${
+                              files.length > 1 ? "s" : ""
+                            }`}
+                          </span>
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          ) : null }
+        </AnimatePresence>
+        
+        {files.length === 0 && !isMerging && (
           <motion.div
-            key="files-absent"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex-1 flex flex-col items-center justify-center text-center p-8 text-muted-foreground"
-          >
-              <p className="text-sm">
-                Add files above to get started.
-              </p>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              key="files-absent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex-1 flex flex-col items-center justify-center text-center p-8 text-muted-foreground"
+            >
+                <p className="text-sm">
+                  Add files above to get started.
+                </p>
+            </motion.div>
+        )}
+      </div>
     </div>
   );
 }
