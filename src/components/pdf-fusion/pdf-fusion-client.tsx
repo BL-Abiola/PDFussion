@@ -36,19 +36,34 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
   }, []);
 
   const handleDelete = useCallback((id: string) => {
-    setFiles((prevFiles) => prevFiles.filter((file) => file.id !== id));
+    setFiles((prevFiles) => {
+      const fileToDelete = prevFiles.find(f => f.id === id);
+      if (fileToDelete?.previewUrl) {
+        URL.revokeObjectURL(fileToDelete.previewUrl);
+      }
+      return prevFiles.filter((file) => file.id !== id);
+    });
   }, []);
 
   const handleReorder = useCallback((reorderedFiles: FileItemType[]) => {
     setFiles(reorderedFiles);
   }, []);
 
-  const handleClearAll = () => {
+  const clearAndRevokeUrls = (filesToClear: FileItemType[]) => {
+     filesToClear.forEach(item => {
+      if (item.previewUrl) {
+        URL.revokeObjectURL(item.previewUrl);
+      }
+    });
     setFiles([]);
+  }
+
+  const handleClearAll = () => {
+    clearAndRevokeUrls(files);
   };
 
   const reset = () => {
-    setFiles([]);
+    clearAndRevokeUrls(files);
     setIsMerging(false);
     setProgress(0);
   };

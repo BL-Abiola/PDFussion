@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/utils";
 import type { FileItemType } from "./types";
 import { cn } from "@/lib/utils";
-import React from "react";
 
 type FileItemProps = {
   fileItem: FileItemType;
@@ -24,16 +23,6 @@ export function FileItem({ fileItem, onDelete }: FileItemProps) {
     transition,
     isDragging,
   } = useSortable({ id: fileItem.id });
-
-  React.useEffect(() => {
-    // When the component unmounts, revoke the object URL to free up memory.
-    return () => {
-      if (fileItem.previewUrl) {
-        URL.revokeObjectURL(fileItem.previewUrl);
-      }
-    };
-  }, [fileItem.previewUrl]);
-
 
   const style = {
     transform: CSS.Transform.toString(transform),
