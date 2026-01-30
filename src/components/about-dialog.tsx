@@ -13,7 +13,7 @@ import { Mail } from "lucide-react";
 export function AboutDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md rounded-2xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">About PDFusion</DialogTitle>
           <DialogDescription>
@@ -30,7 +30,7 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean, onOpenChang
             <div className="space-y-1">
                 <h3 className="font-semibold text-foreground">Developer</h3>
                 <p className="text-sm text-muted-foreground">
-                [Developer Name]
+                BL_Abiola
                 </p>
             </div>
             <div className="space-y-2">
