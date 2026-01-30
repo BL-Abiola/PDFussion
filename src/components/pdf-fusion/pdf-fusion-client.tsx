@@ -110,9 +110,10 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
         <FileDropzone onDrop={handleDrop} hasFiles={files.length > 0} />
       </div>
 
-      <AnimatePresence>
-        {files.length > 0 && (
+      <AnimatePresence mode="wait">
+        {files.length > 0 ? (
           <motion.div
+            key="files-present"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -187,11 +188,9 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
               </AnimatePresence>
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {files.length === 0 && !isMerging && (
+        ) : !isMerging ? (
           <motion.div
+            key="files-absent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -201,7 +200,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
                 Add files above to get started.
               </p>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );
