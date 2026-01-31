@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'pd-fuser',
+  title: 'PD-Fuser',
   description: 'Drag, drop, and merge. Create your perfect PDF in seconds.',
 };
 

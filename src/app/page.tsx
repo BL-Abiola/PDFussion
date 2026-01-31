@@ -66,7 +66,7 @@ export default function Home() {
         <div className="container mx-auto flex h-16 items-center px-4 sm:px-6 md:px-8">
           <a href="/" className="flex items-center space-x-2">
             <Files className="h-6 w-6 text-primary" />
-            <span className="text-lg font-bold text-foreground">pd-fuser</span>
+            <span className="text-lg font-bold text-foreground">PD-Fuser</span>
           </a>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <ThemeToggle />
