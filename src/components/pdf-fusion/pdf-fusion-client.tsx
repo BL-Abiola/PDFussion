@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from "react";
 import { PDFDocument } from "pdf-lib";
-import html2pdf from "html2pdf.js";
 import { AnimatePresence, motion } from "framer-motion";
 import { FileDropzone } from "./file-dropzone";
 import { FileQueue } from "./file-queue";
@@ -130,6 +129,7 @@ export function PdfFusionClient({ onMergeComplete }: PdfFusionClientProps) {
             });
           }
         } else if (file.type === "text/html") {
+          const html2pdf = (await import("html2pdf.js")).default;
           const htmlString = await file.text();
           const pdfArrayBuffer = await html2pdf()
             .from(htmlString, "string")
